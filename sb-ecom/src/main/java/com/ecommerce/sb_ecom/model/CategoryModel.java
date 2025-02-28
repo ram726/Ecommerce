@@ -1,6 +1,8 @@
 package com.ecommerce.sb_ecom.model;
 
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -16,13 +18,27 @@ public class CategoryModel {
 	@Column(nullable = false, updatable = false)
 	private Long categoryCreationTime;
 	
+	@OneToMany(mappedBy = "categoryModel", cascade = CascadeType.ALL)
+	private List<Product> products;
+	
     // Auto-set timestamp before persisting to DB
     @PrePersist
     protected void onCreate() {
     	 this.categoryCreationTime = System.currentTimeMillis(); // Store timestamp as long (milliseconds)
     }
 
-	
+    public List<Product> getProducts() {
+		return products;
+	}
+
+
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
+
+
 	public String getCategoryId() {
 		return categoryId;
 	}
@@ -43,11 +59,12 @@ public class CategoryModel {
 	public CategoryModel() {
 		 
 	}
-	public CategoryModel(String categoryId, String categoryName, Long  categoryCreationTime) {
+	public CategoryModel(String categoryId, String categoryName, Long categoryCreationTime, List<Product> products) {
 		super();
 		this.categoryId = categoryId;
 		this.categoryName = categoryName;
 		this.categoryCreationTime = categoryCreationTime;
+		this.products = products;
 	}
 	public Long  getCategoryCreationTime() {
 		return categoryCreationTime;

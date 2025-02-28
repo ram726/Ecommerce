@@ -20,6 +20,6 @@ public class IdGeneratorUtil {
                 .mapToObj(i -> String.valueOf(CHARACTERS.charAt(RANDOM.nextInt(CHARACTERS.length()))))
                 .collect(Collectors.joining());
 
-        return "ECOM" + randomString;
+        return "ECOM_" + randomString;
     }
 }
